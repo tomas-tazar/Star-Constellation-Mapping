@@ -1,28 +1,44 @@
 import csv
 import pandas as pd
+import math
+starArr = []
 
 class Star:
-    def __init__(self, name, position, magnitude):
+    def __init__(self, name, magnitude, asc, declination):
         self.name = name
-        self.position = position
         self.magnitude = magnitude
+        self.asc = asc
+        self.declination = declination
 
-def main():
-    nameofConst = str(input("Please enter the full name of the constellation or the respective abbreviation: "))
-    constArr = pd.read_csv('bsc5.dat', nrows=5)
-    df = pd.DataFrame(constArr)
-    print(df)
+nameofConst = str(input("Please enter the full name of the constellation or the respective abbreviation: "))
+with open('bsc5.dat', 'r') as data:
+    for linedata in data.readlines():
+        if linedata[11:14] == nameofConst:
+            name = nameofConst
+        else:
+            continue
 
-    if nameofConst in constArr:
-        for nameofConst in constArr:
-            indexMatch = constArr.index(nameofConst)
-            newStar = Star(indexMatch[1], indexMatch[2], indexMatch[3])
-            indexMatch += 1
-            print("Returning star objects.")
-            print(newStar)
-    else:
-        print("No constellation found.")
-main()
+        try:
+            magnitude = float(linedata[102:107])
+        except:
+            ValueError
+            print("magnitude not present, star will be invalid!")
+            continue
+
+        asc = [float(x) for x in linedata[75:83]]
+        declination = [float(i) for i in linedata[83:90]]
+        starArr.append(Star(name,magnitude,asc,declination))
+
+outputMsg = len(starArr)
+if outputMsg == 0:
+    print("There were no stars of your input found in the Yale Bright Star Catalog.")
+else:
+    print('Returning star objects: \n', starArr)
+
+        
+            
+
+
 
 
 
