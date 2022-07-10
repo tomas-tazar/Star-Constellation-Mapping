@@ -1,22 +1,29 @@
+import csv
+import pandas as pd
+constArr = pd.array
+
+class Star:
+    def __init__(self, name, position, magnitude):
+        self.name = name
+        self.position = position
+        self.magnitude = magnitude
+
 def main():
-    constArr = []
-    validConstellation = False
-    
     nameofConst = str(input("Please enter the full name of the constellation or the respective abbreviation: "))
-    with open('bsc5.dat', 'r') as data:
-        linedata = data.readlines()
-        for line in linedata:
-            constArr.append(line)
-        if nameofConst in constArr:
-            validConstellation = True
-        else:
-            validConstellation = False
-    data.close()
+    constArr = pd.read_csv('bsc5.dat', nrows=5)
+    print(constArr)
 
-    if validConstellation == True:
-        indexMatch = constArr.index(nameofConst)
-        
-
+    if nameofConst in constArr:
+        for nameofConst in constArr:
+            indexMatch = constArr.index(nameofConst)
+            newStar = Star(indexMatch[1], indexMatch[2], indexMatch[3])
+            indexMatch += 1
+            print("Returning star objects.")
+            print(newStar)
+            return newStar            
     else:
-        print("No contellation parsed.")
+        print("No constellation found.")
 main()
+
+
+
