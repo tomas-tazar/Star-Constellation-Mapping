@@ -1,5 +1,4 @@
 import csv
-from re import X
 import pandas as pd
 import math
 starArr = []
