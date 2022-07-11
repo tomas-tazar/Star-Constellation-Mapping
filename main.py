@@ -1,4 +1,5 @@
 import csv
+from re import X
 import pandas as pd
 import math
 starArr = []
@@ -27,10 +28,11 @@ with open('bsc5.dat', 'r') as data:
 
         asc = [float(x) for x in linedata[75:83]]
         declination = [float(i) for i in linedata[83:90]]
+
         starArr.append(Star(name,magnitude,asc,declination))
 
-outputMsg = len(starArr)
-if outputMsg == 0:
+lenChecker = len(starArr)
+if lenChecker == 0:
     print("There were no stars of your input found in the Yale Bright Star Catalog.")
 else:
     print('Returning star objects: \n', starArr)
