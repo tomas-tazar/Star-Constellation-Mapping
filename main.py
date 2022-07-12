@@ -27,8 +27,7 @@ with open('bsc5.dat', 'r') as data:
 
         try:
             magnitude = float(linedata[102:107])
-        except:
-            ValueError
+        except ValueError:
             print("magnitude is not a valid value, star will be invalid!")
             continue
 
@@ -46,6 +45,13 @@ sumAscension = sum([Star.asc for Star in starArr])
 sumDeclination = sum([Star.declination for Star in starArr])
 asc0 = sumAscension / lenOfStarArray
 declination0 = sumDeclination / lenOfStarArray
+x, y = [None]*lenOfStarArray, [None]*lenOfStarArray
+
+for i, Star in enumerate(starArr):
+    x[i], y[i] = Star.calculateCoordinates(asc0, declination0)
+
+minX, maxX, minY, maxY = min(x), max(x), min(y), max(y)
+
 
 lenOfStarArray = len(starArr)
 if lenOfStarArray == 0:
