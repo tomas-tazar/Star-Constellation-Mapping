@@ -15,7 +15,7 @@ The idea behind the project was from the UoE CSEE society.
 - [ ] Red coloured stars display incorrectly
 
 ### Requirements to run
-
+---
 To run the code *properly* you have to first install the **svgwrite** library (credit: github.com/mozman/svgwrite)
 
 To install simply use: ` pip install svgwrite `
