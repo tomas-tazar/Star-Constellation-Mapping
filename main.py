@@ -3,7 +3,7 @@ import sys
 import math
 import svgwrite
 starArr = []
-availableConstellations = []
+availableConstellations = ["And", "Cap","Col", "Dra", "Lac", "Mus", "Psc", "Tau", "Ant", "Car", "Com", "Eql", "Leo", "Nor", "Pup", "Tel", "Aps", "Cas", "CrA" ,"Eri", "Lep", "Oct", "Pyx", "TrA", "Aql", "Cen", "CrB", "For", "Lib", "Oph","Ret", "Tri", "Aqr", "Cep", "Crt", "Gem", "LMi", "Ori", "Scl", "Tuc", "Ara","Cet", "Cru", "Lup", "Pav", "Sco", "UMa", "Ari", "Cha", "Crv", "Her", "Lyn", "Peg", "Sct", "UMi", "Aur", "Cir", "CVn","Hor", "Lyr","Per", "Ser","Vel", "Boo","CMa","Cyg","Hya","Men","Phe","Sex","Vir", "Cae","CMi","Del","Hyi","Mic","Pic","Sge","Vol","Cam","Cnc","Dor","Ind","Mon","PsA","Sgr", "Vul"]
 
 class Star:
     def __init__(self, name, magnitude, asc, declination, colour):
@@ -20,7 +20,15 @@ class Star:
 
         return self.x, self.y
 
-nameofConst = str(input("Please enter the full name of the constellation or the respective abbreviation: "))
+choose = str(input("Welcome to the Star Constellation Mapper, would you like to display a list of possible constellation inputs? \n[y/n]: "))
+if (choose == 'y'):
+    print("\n", availableConstellations, '\n')
+elif (choose == 'n'):
+    pass
+else:
+    sys.exit(1)
+
+nameofConst = str(input("Please enter the respective abbreviation of the constellation that you want to map: "))
 with open('bsc5.dat', 'r') as data:
     for linedata in data.readlines():
         if linedata[11:14] == nameofConst:
@@ -67,7 +75,7 @@ with open('bsc5.dat', 'r') as data:
                 else:
                     colour = '#c2b82b'
             '''
-            
+
         except (NameError, ValueError):
             colour = '#FFFFFF'   
 
@@ -102,7 +110,7 @@ minX, maxX, minY, maxY = min(x), max(x), min(y), max(y)
 
 
 dwg = svgwrite.Drawing('{:s}.svg'.format(nameofConst), profile='full')
-dwg.add(dwg.rect(insert=(0, 0), size=(1200, 1200), fill='black'))
+dwg.add(dwg.rect(insert=(0, 0), size=(2000, 2000), fill='black'))
 
 for Star in starArr:
     fcoordX = (Star.x - minY) / (maxX - minX)
@@ -112,9 +120,19 @@ for Star in starArr:
     dwg.add(dwg.circle(center=(resX, resY), r=max(1,5-Star.magnitude), stroke='none', fill=Star.colour))
     dwg.save()
 
+'''
+try:
+    file_handle = open("SVGs", 'w')
+except IOError as e:
+    print(str(e))
+    exit(1)
+
+file_handle.write(str(dwg))
+'''
+
 if lenOfStarArray != 0:
     print('\nSuccess! \nCheck your folder for the SVG image output!')
-    cont = str(input("Would you like to map another constellation? [y/n]: "))
+    cont = str(input("\nWould you like to map another constellation? [y/n]: "))
     if cont == 'y':
         os.system('python "main.py"')
     else:
