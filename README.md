@@ -17,6 +17,6 @@ The idea behind the project was from the UoE CSEE society as a summer challenge.
 
 ### Requirements to run
 ---
-To run the code *properly* you have to first install the **svgwrite** library: [Mozman's svgwrite library](github.com/mozman/svgwrite)
+To run the code *properly* you have to first install the **svgwrite** library: [Mozman's svgwrite library](https://github.com/mozman/svgwrite)
 
 To install simply go into your python directory and ` pip install svgwrite `
