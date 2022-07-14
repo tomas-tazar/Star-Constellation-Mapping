@@ -3,13 +3,15 @@ import sys
 import math
 import svgwrite
 starArr = []
+availableConstellations = []
 
 class Star:
-    def __init__(self, name, magnitude, asc, declination):
+    def __init__(self, name, magnitude, asc, declination, colour):
         self.name = name
         self.magnitude = magnitude
         self.asc = asc
         self.declination = declination
+        self.colour = colour
 
     def calculateCoordinates(self, asc0, declination0):
         deltaAsc = self.asc - asc0
@@ -29,16 +31,50 @@ with open('bsc5.dat', 'r') as data:
         try:
             magnitude = float(linedata[102:107])
         except ValueError:
-            print("magnitude is not a valid value, star will be invalid!")
             continue
-
+        
+        try:
+            colourB = float(linedata[102:107])
+            colourV = float(linedata[180:184])
+            colourR = float(linedata[185:190])     
+        except (NameError, ValueError):
+            colour = '#FFFFFF'
+            
         ascHour, ascMin, ascSec = [float(x) for x in (linedata[75:77], linedata[77:79], linedata[79:83])]
         declinationHour, declinationMin, declinationSec = [float(i) for i in (linedata[83:86], linedata[86:88], linedata[88:90])]
+        
+        try:
+            if (colourB - colourV) < float(0):
+                if (colourB - colourV) < float(-3):
+                    colour = '#000dff'
+                    if(colourB - colourV) < float(-10):
+                        colour = '#050dfc'
+                else:
+                    colour = '#6e72ba'
+
+            if (colourB - colourV) > float(0):
+                if(colourB - colourV) > float(3):
+                    colour = '#fcfcfc'
+                else:
+                    colour = '#e4e4ed'
+            
+            '''
+            if (colourV - colourR) < float(-10):
+                if(colourV - colourR) < float(-100):
+                    colour = '#c2802b'
+                    if(colourV - colourR) < float(-160):
+                        colour = '#d44317'
+                else:
+                    colour = '#c2b82b'
+            '''
+            
+        except (NameError, ValueError):
+            colour = '#FFFFFF'   
 
         asc = math.radians((ascHour + ascMin/60 + ascSec/3600) * 15.)
         declination = math.radians(declinationHour + declinationMin/60 + declinationSec/3600)
 
-        starArr.append(Star(name,magnitude,asc,declination))
+        starArr.append(Star(name,magnitude,asc,declination,colour))
 
 lenOfStarArray = len(starArr)
 
@@ -64,26 +100,23 @@ for i, Star in enumerate(starArr):
 
 minX, maxX, minY, maxY = min(x), max(x), min(y), max(y)
 
-width = 500
-height = 500
 
-
-dwg = svgwrite.Drawing('{:s}.svg'.format(nameofConst), profile='full', size=(width,height))
-dwg.add(dwg.rect(insert=(0, 0), size=(800, 800), fill='black'))
+dwg = svgwrite.Drawing('{:s}.svg'.format(nameofConst), profile='full')
+dwg.add(dwg.rect(insert=(0, 0), size=(1200, 1200), fill='black'))
 
 for Star in starArr:
     fcoordX = (Star.x - minY) / (maxX - minX)
     fcoordY = (Star.y - minY) / (maxY - minY)
-    resX = (1-fcoordX) * (width)
-    resY = (1-fcoordY) * (height)
-    dwg.add(dwg.circle(center=(resX, resY), r=max(1,5-Star.magnitude), stroke='none', fill='#FFFFFF'))
+    resX = (1-fcoordX) * (500)
+    resY = (1-fcoordY) * (500)
+    dwg.add(dwg.circle(center=(resX, resY), r=max(1,5-Star.magnitude), stroke='none', fill=Star.colour))
     dwg.save()
 
 if lenOfStarArray != 0:
     print('\nSuccess! \nCheck your folder for the SVG image output!')
     cont = str(input("Would you like to map another constellation? [y/n]: "))
     if cont == 'y':
-        os.execl(sys.executable, os.path.abspath(__file__), *sys.argv)
+        os.system('python "main.py"')
     else:
         print("Goodbye!")
         sys.exit(0)
