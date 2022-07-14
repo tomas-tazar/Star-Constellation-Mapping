@@ -1,7 +1,7 @@
 import os
 import sys
-import pandas as pd
 import math
+import svgwrite
 starArr = []
 
 class Star:
@@ -44,7 +44,6 @@ lenOfStarArray = len(starArr)
 
 asc0sum = sum([Star.asc for Star in starArr])
 declination0sum = sum([Star.declination for Star in starArr])
-
 x, y = [None]*lenOfStarArray, [None]*lenOfStarArray
 
 
@@ -64,23 +63,21 @@ for i, Star in enumerate(starArr):
     x[i], y[i] = Star.calculateCoordinates(asc0, declination0)
 
 minX, maxX, minY, maxY = min(x), max(x), min(y), max(y)
-aspectratio = 0.8
 
 width = 500
 height = 500
 
-with open('{:s}.svg'.format(name), 'w') as fileoutput:
-    print('<?xml version="1.0" encoding="utf-8"?>', file=fileoutput)
-    print('<svg xmlns="http://www.w3.org/2000/svg"', file=fileoutput)
-    print('xmlns:xlink="http://www.w3.org/1999/xlink"', file=fileoutput)
-    print('width="{:d}" height="{:d}" style="background: #000000">'.format(width, height), file=fileoutput)
-    for Star in starArr:
-        rx = (Star.x - minX) / (maxX - minX)
-        ry = (Star.y - minY) / (maxY - minY)
-        cx = (1-rx) * (width)
-        cy = (1-ry) * (height)
-        print('<circle cx="{cx:.1f}" cy="{cy:.1f}" r="{r:.1f}"'' stroke="none" fill="#ffffff" name="{name:s}"/>'.format(cx=cx, cy=cy, r=max(1,5-Star.magnitude), name=Star.name), file=fileoutput)
-    print('</svg>', file=fileoutput)
+
+dwg = svgwrite.Drawing('{:s}.svg'.format(nameofConst), profile='full', size=(width,height))
+dwg.add(dwg.rect(insert=(0, 0), size=(800, 800), fill='black'))
+
+for Star in starArr:
+    fcoordX = (Star.x - minY) / (maxX - minX)
+    fcoordY = (Star.y - minY) / (maxY - minY)
+    resX = (1-fcoordX) * (width)
+    resY = (1-fcoordY) * (height)
+    dwg.add(dwg.circle(center=(resX, resY), r=max(1,5-Star.magnitude), stroke='none', fill='#FFFFFF'))
+    dwg.save()
 
 if lenOfStarArray != 0:
     print('\nSuccess! \nCheck your folder for the SVG image output!')
