@@ -51,30 +51,23 @@ with open('bsc5.dat', 'r') as data:
         ascHour, ascMin, ascSec = [float(x) for x in (linedata[75:77], linedata[77:79], linedata[79:83])]
         declinationHour, declinationMin, declinationSec = [float(i) for i in (linedata[83:86], linedata[86:88], linedata[88:90])]
         
-        try:
-            if (colourB - colourV) < float(0):
-                if (colourB - colourV) < float(-3):
-                    colour = '#000dff'
-                    if(colourB - colourV) < float(-10):
-                        colour = '#050dfc'
-                else:
-                    colour = '#6e72ba'
-
-            if (colourB - colourV) > float(0):
-                if(colourB - colourV) > float(3):
-                    colour = '#fcfcfc'
-                else:
-                    colour = '#e4e4ed'
-            
-            '''
-            if (colourV - colourR) < float(-10):
-                if(colourV - colourR) < float(-100):
-                    colour = '#c2802b'
-                    if(colourV - colourR) < float(-160):
-                        colour = '#d44317'
-                else:
-                    colour = '#c2b82b'
-            '''
+        try: #https://en.wikipedia.org/wiki/Color_index
+            if (colourB - colourV) < float(-0.02):
+                colour = '#c0cfff'
+            elif(colourB - colourV) < float(-0.30):
+                colour = '#50a0ff'
+            elif(colourB - colourV) < float(-0.33):
+                colour = '#7070ff'
+            elif (colourB - colourV) > float(0):
+                colour = '#cfffff'
+            elif(colourB - colourV) > float(0.30):
+                colour = '#fcfcfc'
+            elif(colourB - colourV) > float(0.58):
+                colour = '#efffdf'
+            elif(colourB - colourV) > float(0.81):
+                colour = '#ffff7f'
+            elif(colourB - colourV) > float(1.40):
+                colour = '#ff7f7f'
 
         except (NameError, ValueError):
             colour = '#FFFFFF'   
