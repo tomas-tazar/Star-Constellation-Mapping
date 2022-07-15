@@ -13,7 +13,7 @@ The idea behind the project was from the UoE CSEE society as a summer challenge.
 ## Known bugs
 
 - [ ] Andromeda constellation doesn't display properly
-- [ ] Red coloured/red colouring on stars displays incorrectly
+- [x] Red coloured/red colouring on stars displays incorrectly
 
 
 ### Requirements to run
