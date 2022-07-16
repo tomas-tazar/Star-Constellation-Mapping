@@ -10,16 +10,18 @@ The idea behind the project was from the UoE CSEE society as a summer challenge.
 
 <img style="float: right;" width="20%" height="20%" src="exampleSVGs/Leo.png"> <img style="float: right;" width="20%" height="20%" src="exampleSVGs/Ori.png"> <img style="float: right;" width="20%" height="20%" src="exampleSVGs/Tau.png">
 
+The colouring of the stars in their respective constellations is calculated using the [Star Color Index](https://en.wikipedia.org/wiki/Color_index) which also tells us the estimated temperature of the star
+
 ---
 
 ## Known bugs
 
 - [ ] Andromeda constellation doesn't display properly
-- [x] Red coloured/red colouring on stars displays incorrectly
+- [x] Red coloured stars/red colouring on stars displays incorrectly
 
 
-### Requirements to run
----
+## Requirements to run
+
 To run the code *properly* you have to first install the **svgwrite** library: [Mozman's svgwrite library](https://github.com/mozman/svgwrite)
 
 To install simply go into your python directory and ` pip install svgwrite `
