@@ -28,6 +28,6 @@ To install simply go into your python directory and ` pip install svgwrite `
 
 ## Further plans
 
-Integrating a responsive GUI which is able to display the SVGs without the user having to navigate through his file directory
+- [ ] Integrating a responsive GUI which is able to display the SVGs without the user having to navigate through his file directory
 
-Improving clarity of stars in image, adding possible background noise for a more realistic feel
+- [ ] Improving clarity of stars in image, adding possible background noise for a more realistic feel
