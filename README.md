@@ -25,3 +25,9 @@ The colouring of the stars in their respective constellations is calculated usin
 To run the code *properly* you have to first install the **svgwrite** library: [Mozman's svgwrite library](https://github.com/mozman/svgwrite)
 
 To install simply go into your python directory and ` pip install svgwrite `
+
+## Further plans
+
+Integrating a responsive GUI which is able to display the SVGs without the user having to navigate through his file directory
+
+Improving clarity of stars in image, adding possible background noise for a more realistic feel
